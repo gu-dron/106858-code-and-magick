@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Андрей Епишкин](https://up.htmlacademy.ru/javascript/5/user/106858).
-* Наставник: `Неизвестно`.
+* Наставник: `Александр Быков`.
 
 ---
 
