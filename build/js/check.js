@@ -10,7 +10,11 @@ function getMessage(a,b) {
 	else if (typeof a === 'number') {
 		return ('Я прыгнул на ' + [a] * 100 + ' сантиметров');
 	}
-	else if (typeof a === 'object') {
-		return ('Я прошёл ' + [] + 'шагов');
-	}		
+	else if (typeof (a) === 'object' && typeof (b) === 'object') {
+        return ('Я прошел ' + [] + '3шага');
+    }
+    
+    else if (typeof (a) === 'object' && typeof (b) != 'object') {
+        return 'Я прошёл ' + ' шагов';
+        }		
 };
