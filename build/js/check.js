@@ -13,6 +13,7 @@ function getMessage(a,b) {
 	else if (typeof (a) === 'object' && typeof (b) === 'object') {
         var length = 0;
         for (var i = 0; i < a.length; i++) {
+          length = length + a[i] * b[i];
         }
         return 'Я прошёл '+ length + ' метров';
     }
