@@ -11,7 +11,7 @@ function getMessage(a,b) {
 		return ('Я прыгнул на ' + [a] * 100 + ' сантиметров');
 	}
 	else if (typeof (a) === 'object' && typeof (b) === 'object') {
-        return ('Я прошел ' + [] + 'шага');
+        return ('Я прошел ' + [] + '1шага');
     }
     
     else if (typeof (a) === 'object' && typeof (b) != 'object') {
