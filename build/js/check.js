@@ -11,17 +11,17 @@ function getMessage(a,b) {
 		return ('Я прыгнул на ' + [a] * 100 + ' сантиметров');
 	}
 	else if (typeof (a) === 'object' && typeof (b) === 'object') {
+        var length = 0;
         for (var i = 0; i < a.length; i++) {
-            length = length + a[i] * b[i];
-        return ('Я прошел ' + length + ' метров');
         }
+        return 'Я прошёл '+ length + ' метров';
     }
     
     else if (typeof (a) === 'object' && typeof (b) != 'object') {
         var sum = 0;
         for (var i = 0; i < a.length; i++) {
         sum = sum + a[i];
-        return ('Я прошёл ' + sum + ' шагов');
         }
+        return ('Я прошёл ' + sum + ' шагов');
     }		
 };
