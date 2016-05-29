@@ -1,16 +1,20 @@
 function getMessage(a,b) {
 	if (typeof a === 'boolean') {
 		if(a === true) {
-		return alert ('Я попал в' + [b]);	
+		return ('Я попал в ' + [b]);	
 		}
 		else {
-			return alert ('Я никуда не попал');
+			return ('Я никуда не попал');
 		}
 	}
 	else if (typeof a === 'number') {
-		return alert ('Я прыгнул на ' + [a] * 100 + ' сантиметров');
+		return ('Я прыгнул на ' + [a] * 100 + ' сантиметров');
 	}
-	else if (typeof a === 'object') {
-		return alert ('Я прошёл ' + [] + 'шагов');
-	}		
+	else if (typeof (a) === 'object' && typeof (b) === 'object') {
+        return ('Я прошел ' + [] + 'шага');
+    }
+    
+    else if (typeof (a) === 'object' && typeof (b) != 'object') {
+        return 'Я прошёл ' + ' шагов';
+        }		
 };
