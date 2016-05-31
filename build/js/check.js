@@ -14,7 +14,7 @@ function getMessage(a, b) {
       if (a[index]) {
         return pre + (current * a[index]);
       } else {
-        return 'неизвестно сколько';
+        return pre + current;
       }
     });
     return 'Я прошёл ' + length + ' метров';
