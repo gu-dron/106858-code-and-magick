@@ -13,8 +13,7 @@ function getMessage(a, b) {
     var length = b.reduce(function (pre, current, index) {
       if (a[index]) {
       return pre + (current * a[index]);
-      }
-      else {
+      } else {
         return 'неизвестно сколько';
       }
     });
