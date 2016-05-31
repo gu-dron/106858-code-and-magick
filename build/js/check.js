@@ -11,7 +11,12 @@ function getMessage(a, b) {
     return 'Я прыгнул на ' + a * 100 + ' сантиметров';
   } else if (Array.isArray(a) && Array.isArray(b)) {
     var length = b.reduce(function (pre, current, index) {
+      if (a[index]) {
       return pre + (current * a[index]);
+      }
+      else {
+        return 'неизвестно сколько';
+      }
     });
     return 'Я прошёл ' + length + ' метров';
   } else if (Array.isArray(a)) {
