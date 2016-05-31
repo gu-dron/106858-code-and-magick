@@ -12,7 +12,7 @@ function getMessage(a, b) {
   } else if (Array.isArray(a) && Array.isArray(b)) {
     var length = b.reduce(function (pre, current, index) {
       if (a[index]) {
-      return pre + (current * a[index]);
+        return pre + (current * a[index]);
       } else {
         return 'неизвестно сколько';
       }
