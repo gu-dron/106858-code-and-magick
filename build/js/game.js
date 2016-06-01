@@ -384,7 +384,7 @@
       this.ctx.fillRect(220, 40, 250, 110);
       this.ctx.fillStyle = '#ffffff';
       this.ctx.fillRect(210, 30, 250, 110);
-      this.ctx.fillStyle = '#000066';
+      this.ctx.fillStyle = '#000000';
       
       switch (this.state.currentStatus) {
         case Verdict.WIN:
