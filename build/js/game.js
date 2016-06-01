@@ -378,6 +378,14 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      
+      this.ctx.font = '16px PT Mono';
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.fillRect(220, 40, 200, 110);
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.fillRect(210, 30, 200, 110);
+      this.ctx.fillStyle = '#000000';
+      
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
