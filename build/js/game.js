@@ -400,11 +400,11 @@
         case Verdict.FAIL:
           console.log('you have failed!');
           this.ctx
-          this.ctx.fillText('Метод в ', 220, 50);
-          this.ctx.fillText('JavaScript', 220, 65);
-          this.ctx.fillText('программировании', 220, 80);
-          this.ctx.fillText('это функция или',220, 95);
-          this.ctx.fillText('процедура.',220, 110);
+          this.ctx.fillText('Если бы это', 220, 50);
+          this.ctx.fillText('было возможно ', 220, 65);
+          this.ctx.fillText('я хотел бы вернуться ', 220, 80);
+          this.ctx.fillText('после смерти, ',220, 95);
+          this.ctx.fillText('чтобы узнать...',220, 110);
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
