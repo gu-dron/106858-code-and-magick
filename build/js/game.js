@@ -381,23 +381,49 @@
       
       this.ctx.font = '16px PT Mono';
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-      this.ctx.fillRect(220, 40, 200, 110);
+      this.ctx.fillRect(220, 40, 250, 110);
       this.ctx.fillStyle = '#ffffff';
-      this.ctx.fillRect(210, 30, 200, 110);
-      this.ctx.fillStyle = '#000000';
+      this.ctx.fillRect(210, 30, 250, 110);
+      this.ctx.fillStyle = '#000066';
       
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
+          this.ctx;
+          this.ctx.fillText('Оператор this ', 220, 50);
+          this.ctx.fillText('Ссылается на ', 220, 65);
+          this.ctx.fillText('текущий объект. ', 220, 80);
+          this.ctx.fillText('Синтаксис ',220, 95);
+          this.ctx.fillText('--------- ',220, 110);
+          this.ctx.fillText('|this.property ',220, 125);
           break;
         case Verdict.FAIL:
           console.log('you have failed!');
+          this.ctx
+          this.ctx.fillText('Метод в ', 220, 50);
+          this.ctx.fillText('JavaScript', 220, 65);
+          this.ctx.fillText('программировании', 220, 80);
+          this.ctx.fillText('это функция или',220, 95);
+          this.ctx.fillText('процедура.',220, 110);
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
+          this.ctx;
+          this.ctx.fillText('JavaScript - ', 220, 50);
+          this.ctx.fillText('это скриптовой язык, ', 220, 65);
+          this.ctx.fillText('который можно внедрять ', 220, 80);
+          this.ctx.fillText('в веб-страницы и ',220, 95);
+          this.ctx.fillText('другие приложения.',220, 110);
           break;
         case Verdict.INTRO:
           console.log('welcome to the game! Press Space to start');
+          this.ctx;
+          this.ctx.fillText('JavaScript является ', 220, 50);
+          this.ctx.fillText('слабо типизированным ', 220, 65);
+          this.ctx.fillText('языком, что означает, ', 220, 80);
+          this.ctx.fillText('что типы данных ',220, 95);
+          this.ctx.fillText('переменных ',220, 110);
+          this.ctx.fillText('не объявляются явно.',220, 125);
           break;
       }
     },
