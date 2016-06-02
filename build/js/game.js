@@ -389,7 +389,6 @@
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
-          this.ctx;
           this.ctx.fillText('Оператор this ', 220, 50);
           this.ctx.fillText('Ссылается на ', 220, 65);
           this.ctx.fillText('текущий объект. ', 220, 80);
@@ -399,7 +398,6 @@
           break;
         case Verdict.FAIL:
           console.log('you have failed!');
-          this.ctx;
           this.ctx.fillText('Если бы это', 220, 50);
           this.ctx.fillText('было возможно ', 220, 65);
           this.ctx.fillText('я хотел бы вернуться ', 220, 80);
@@ -408,7 +406,6 @@
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
-          this.ctx;
           this.ctx.fillText('JavaScript - ', 220, 50);
           this.ctx.fillText('это скриптовой язык, ', 220, 65);
           this.ctx.fillText('который можно внедрять ', 220, 80);
@@ -417,7 +414,6 @@
           break;
         case Verdict.INTRO:
           console.log('welcome to the game! Press Space to start');
-          this.ctx;
           this.ctx.fillText('JavaScript является ', 220, 50);
           this.ctx.fillText('слабо типизированным ', 220, 65);
           this.ctx.fillText('языком, что означает, ', 220, 80);
