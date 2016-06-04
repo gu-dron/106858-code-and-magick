@@ -375,8 +375,8 @@
     },
 
 //-----------------------------------------------------------------------------------
-//    Отрисовка текста
-    textMessage: function(text, X, Y) {
+    //    Отрисовка текста
+    textMessage: function(text, X, Y, width) {
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.fillRect(220, 40, 250, 110);
       this.ctx.fillStyle = '#ffffff';
@@ -385,13 +385,24 @@
 
       this.ctx.font = '16px PT Mono';
 
-      for (var i = 0; i < text.length; i++, X = X + 10) {
-        if (X === 450) {
-          Y = Y + 15;
-          X = 220;
-        }
-        this.ctx.fillText(text[i], X, Y);
+      var words = text.split(' ');
+      var ctx = this.ctx;
+      var countWords = words.length;
+      var lineHeight = 20;
+      var line = '';
+      for (var i = 0; i < countWords; i++) {
+            var testLine = line + words[i] + ' ';
+            var testWidth = ctx.measureText(testLine).width;
+            if (testWidth > width) {
+                this.ctx.fillText(line, X, Y);
+                line = words[i] + ' ';
+                Y += lineHeight;
+            }
+            else {
+                line = testLine;
+            }
       }
+      this.ctx.fillText(line, X, Y);
     },
 
     /**
@@ -401,11 +412,12 @@
       var message;
       var positionX = 220;
       var positionY = 50;
+      var width = 240;
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
-          message = 'Проще паренной репы, Молодец!';
+          message = 'Проще паренной репы, молодец! так держать.';
           break;
         case Verdict.FAIL:
           console.log('you have failed!');
@@ -413,15 +425,14 @@
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
-          message = 'В этот момент, ты можешь немного отдохнуть, но не задерживайся, тебя ждут увлекательные приключения.';
+          message = 'В этот момент, ты можешь немного отдохнуть, но не задерживайся, тебя ждут приключения!';
           break;
         case Verdict.INTRO:
           console.log('welcome to the game! Press Space to start');
           message = 'Так начнем же нашу игру, если готов, нажми пробел для старта!';
-//          message = ['Так начнем же нашу игру,', 'если готов,', 'нажми пробел для старта!'];
           break;
       }
-      this.textMessage(message, positionX, positionY);
+      this.textMessage(message, positionX, positionY, width);
     },
 
     /**
