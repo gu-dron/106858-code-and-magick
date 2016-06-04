@@ -391,16 +391,15 @@
       var lineHeight = 20;
       var line = '';
       for (var i = 0; i < countWords; i++) {
-            var testLine = line + words[i] + ' ';
-            var testWidth = ctx.measureText(testLine).width;
-            if (testWidth > width) {
-                this.ctx.fillText(line, X, Y);
-                line = words[i] + ' ';
-                Y += lineHeight;
-            }
-            else {
-                line = testLine;
-            }
+        var testLine = line + words[i] + ' ';
+        var testWidth = ctx.measureText(testLine).width;
+        if (testWidth > width) {
+          this.ctx.fillText(line, X, Y);
+          line = words[i] + ' ';
+          Y += lineHeight;
+        } else {
+          line = testLine;
+        }
       }
       this.ctx.fillText(line, X, Y);
     },
