@@ -375,50 +375,53 @@
     },
 
 //-----------------------------------------------------------------------------------
-//    Отрисовка многоугольника
-    formCanvas: function() {
-      
+//    Отрисовка текста
+    textMessage: function(text, X, Y) {
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.fillRect(220, 40, 250, 110);
       this.ctx.fillStyle = '#ffffff';
       this.ctx.fillRect(210, 30, 250, 110);
       this.ctx.fillStyle = '#000000';
-     },
 
-//    Отрисовка текста
-    textMessage: function(text) {
       this.ctx.font = '16px PT Mono';
-      this.ctx.fillText(text, 220, 50);
+
+      for (var i = 0; i < text.length; i++,X = X + 10) {
+        if (X == 450) {
+          Y = Y + 15;
+          X = 220;
+        }
+        this.ctx.fillText(text[i], X, Y);
+      }
     },
+
     /**
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
       var message;
+      var positionX = 220;
+      var positionY = 50;
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
-          this.formCanvas();
           message = 'Проще паренной репы, Молодец!';
           break;
         case Verdict.FAIL:
           console.log('you have failed!');
-          this.formCanvas();
           message = 'В этот раз тебе не повезло мой друг, но не отчаивайся, просто перегрузи страницу!';
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
-          this.formCanvas();
           message = 'В этот момент, ты можешь немного отдохнуть, но не задерживайся, тебя ждут увлекательные приключения.';
           break;
         case Verdict.INTRO:
           console.log('welcome to the game! Press Space to start');
-          this.formCanvas();
           message = 'Так начнем же нашу игру, если готов, нажми пробел для старта!';
+//          message = ['Так начнем же нашу игру,', 'если готов,', 'нажми пробел для старта!'];
           break;
       }
-      this.textMessage(message);
+      this.textMessage(message, positionX, positionY);
     },
 
     /**
