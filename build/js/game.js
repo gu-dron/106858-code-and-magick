@@ -385,8 +385,8 @@
 
       this.ctx.font = '16px PT Mono';
 
-      for (var i = 0; i < text.length; i++,X = X + 10) {
-        if (X == 450) {
+      for (var i = 0; i < text.length; i++, X = X + 10) {
+        if (X === 450) {
           Y = Y + 15;
           X = 220;
         }
