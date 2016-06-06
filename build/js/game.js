@@ -252,6 +252,7 @@
     this.container.appendChild(this.canvas);
 
     this.ctx = this.canvas.getContext('2d');
+    this.ctx.font = '16px PT Mono';
 
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onKeyUp = this._onKeyUp.bind(this);
@@ -374,16 +375,18 @@
       }
     },
 
-//-----------------------------------------------------------------------------------
     //    Отрисовка текста
-    textMessage: function(text, X, Y, width) {
+
+    textMessage: function(text) {
+      var positionX = 220;
+      var positionY = 50;
+      var width = 240;
+
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.fillRect(220, 40, 250, 110);
       this.ctx.fillStyle = '#ffffff';
       this.ctx.fillRect(210, 30, 250, 110);
-      this.ctx.fillStyle = '#000000';
-
-      this.ctx.font = '16px PT Mono';
+      this.ctx.fillStyle = '#000000';      
 
       var words = text.split(' ');
       var ctx = this.ctx;
@@ -394,14 +397,14 @@
         var testLine = line + words[i] + ' ';
         var testWidth = ctx.measureText(testLine).width;
         if (testWidth > width) {
-          this.ctx.fillText(line, X, Y);
+          this.ctx.fillText(line, positionX, positionY);
           line = words[i] + ' ';
-          Y += lineHeight;
+          positionY += lineHeight;
         } else {
           line = testLine;
         }
       }
-      this.ctx.fillText(line, X, Y);
+      this.ctx.fillText(line, positionX, positionY);
     },
 
     /**
@@ -409,9 +412,6 @@
      */
     _drawPauseScreen: function() {
       var message;
-      var positionX = 220;
-      var positionY = 50;
-      var width = 240;
 
       switch (this.state.currentStatus) {
         case Verdict.WIN:
@@ -431,9 +431,9 @@
           message = 'Так начнем же нашу игру, если готов, нажми пробел для старта!';
           break;
       }
-      this.textMessage(message, positionX, positionY, width);
-    },
 
+      this.textMessage(message);
+    },
     /**
      * Предзагрузка необходимых изображений для уровня.
      * @param {function} callback
