@@ -386,7 +386,7 @@
       this.ctx.fillRect(220, 40, 250, 110);
       this.ctx.fillStyle = '#ffffff';
       this.ctx.fillRect(210, 30, 250, 110);
-      this.ctx.fillStyle = '#000000';      
+      this.ctx.fillStyle = '#000000';
 
       var words = text.split(' ');
       var ctx = this.ctx;
