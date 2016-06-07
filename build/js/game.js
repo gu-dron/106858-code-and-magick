@@ -1,6 +1,11 @@
 'use strict';
 
 (function() {
+  var POSITION_X = 220;
+  var POSITION_Y = 50;
+  var WIDTH_TEXT = 240;
+  var DEFAULT_FONT = '16px PT Mono';
+
   /**
    * @const
    * @type {number}
@@ -374,26 +379,63 @@
       }
     },
 
+    //    Отрисовка текста
+
+    textMessage: function(text) {
+
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+      this.ctx.fillRect(220, 40, 250, 110);
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.fillRect(210, 30, 250, 110);
+      this.ctx.fillStyle = '#000000';
+      this.ctx.font = DEFAULT_FONT;
+
+      var words = text.split(' ');
+      var ctx = this.ctx;
+      var countWords = words.length;
+      var lineHeight = 20;
+      var line = '';
+      for (var i = 0; i < countWords; i++) {
+        var testLine = line + words[i] + ' ';
+        var testWidth = ctx.measureText(testLine).width;
+        if (testWidth > WIDTH_TEXT) {
+          this.ctx.fillText(line, POSITION_X, POSITION_Y);
+          line = words[i] + ' ';
+          POSITION_Y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      this.ctx.fillText(line, POSITION_X, POSITION_Y);
+    },
+
     /**
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      var message;
+
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           console.log('you have won!');
+          message = 'Проще паренной репы, молодец! так держать.';
           break;
         case Verdict.FAIL:
           console.log('you have failed!');
+          message = 'В этот раз тебе не повезло мой друг, но не отчаивайся, просто перегрузи страницу!';
           break;
         case Verdict.PAUSE:
           console.log('game is on pause!');
+          message = 'В этот момент, ты можешь немного отдохнуть, но не задерживайся, тебя ждут приключения!';
           break;
         case Verdict.INTRO:
           console.log('welcome to the game! Press Space to start');
+          message = 'Так начнем же нашу игру, если готов, нажми пробел для старта!';
           break;
       }
-    },
 
+      this.textMessage(message);
+    },
     /**
      * Предзагрузка необходимых изображений для уровня.
      * @param {function} callback
