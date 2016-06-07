@@ -1,6 +1,10 @@
 'use strict';
 
 (function() {
+  var POSITION_X = 220;
+  var POSITION_Y = 50;
+  var WIDTH_TEXT = 240;
+
   /**
    * @const
    * @type {number}
@@ -378,9 +382,6 @@
     //    Отрисовка текста
 
     textMessage: function(text) {
-      var positionX = 220;
-      var positionY = 50;
-      var width = 240;
 
       this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
       this.ctx.fillRect(220, 40, 250, 110);
@@ -396,15 +397,15 @@
       for (var i = 0; i < countWords; i++) {
         var testLine = line + words[i] + ' ';
         var testWidth = ctx.measureText(testLine).width;
-        if (testWidth > width) {
-          this.ctx.fillText(line, positionX, positionY);
+        if (testWidth > WIDTH_TEXT) {
+          this.ctx.fillText(line, POSITION_X, POSITION_Y);
           line = words[i] + ' ';
-          positionY += lineHeight;
+          POSITION_Y += lineHeight;
         } else {
           line = testLine;
         }
       }
-      this.ctx.fillText(line, positionX, positionY);
+      this.ctx.fillText(line, POSITION_X, POSITION_Y);
     },
 
     /**
