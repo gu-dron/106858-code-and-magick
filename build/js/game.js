@@ -4,6 +4,7 @@
   var POSITION_X = 220;
   var POSITION_Y = 50;
   var WIDTH_TEXT = 240;
+  var DEFAULT_FONT = '16px PT Mono';
 
   /**
    * @const
@@ -256,7 +257,6 @@
     this.container.appendChild(this.canvas);
 
     this.ctx = this.canvas.getContext('2d');
-    this.ctx.font = '16px PT Mono';
 
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onKeyUp = this._onKeyUp.bind(this);
@@ -388,6 +388,7 @@
       this.ctx.fillStyle = '#ffffff';
       this.ctx.fillRect(210, 30, 250, 110);
       this.ctx.fillStyle = '#000000';
+      this.ctx.font = DEFAULT_FONT;
 
       var words = text.split(' ');
       var ctx = this.ctx;
