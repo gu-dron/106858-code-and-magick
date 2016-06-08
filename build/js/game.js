@@ -1,5 +1,6 @@
 'use strict';
 
+
 (function() {
   var POSITION_X = 220;
   var POSITION_Y = 50;
