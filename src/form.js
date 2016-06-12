@@ -17,7 +17,6 @@
 
   var reviewName = document.getElementById('review-name');
   var button = document.querySelector('.review-submit');
-  var fieldName = document.querySelector('.review-fields-name');
 
   button.setAttribute('disabled', 'disabled');
   reviewName.setAttribute('required', 'required');
