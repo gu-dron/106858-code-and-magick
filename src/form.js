@@ -30,17 +30,16 @@
 
   button.setAttribute('disabled', 'disabled');
   reviewName.setAttribute('required', 'required');
-  reviewText.setAttribute('required', 'required');
 
   reviewText.addEventListener('keyup', function(evt) {
-    if (reviewText.validity.valid) {
+    if (reviewText.value.length > 0) {
       fieldText.remove();
       fieldText2.remove();
       evt.preventDefault();
     } else {
       newField.parentNode.insertBefore(fieldText2, newField.nextSibling);
     }
-  }, true);
+  }, false);
 
   reviewName.addEventListener('keyup', function(evt) {
     if (reviewName.validity.valid) {
