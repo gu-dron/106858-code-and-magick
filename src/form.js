@@ -23,34 +23,73 @@
   var fieldName2 = fieldName.cloneNode(true);
   var fieldText2 = fieldText.cloneNode(true);
   var div = document.querySelector('.review-fields');
+  var labelComment = div.children[2];
   var newField = document.createElement('label');
+  var markLabel = document.querySelectorAll('.review-mark-label');
 
   newField.innerHTML = '';
-  div.insertBefore(newField, div.children[2]);
+  div.insertBefore(newField, labelComment);
 
   button.setAttribute('disabled', 'disabled');
   reviewName.setAttribute('required', 'required');
 
-  reviewText.addEventListener('keyup', function(evt) {
-    if (reviewText.value.length > 0) {
-      fieldText.remove();
-      fieldText2.remove();
-      evt.preventDefault();
-    } else {
-      newField.parentNode.insertBefore(fieldText2, newField.nextSibling);
-    }
-  }, false);
+  function checkFieldText() {
+    reviewText.addEventListener('keyup', function(evt) {
+      if (reviewText.value.length > 0) {
+        fieldText.remove();
+        fieldText2.remove();
+        evt.preventDefault();
+      } else {
+        newField.parentNode.insertBefore(fieldText2, newField.nextSibling);
+      }
+    }, false);
+  }
 
-  reviewName.addEventListener('keyup', function(evt) {
-    if (reviewName.validity.valid) {
-      button.removeAttribute('disabled', 'disabled');
-      fieldName.remove();
-      fieldName2.remove();
+  checkFieldText();
+
+  function checkFieldName() {
+    reviewName.addEventListener('keyup', function(evt) {
+      if (reviewName.validity.valid) {
+        button.removeAttribute('disabled', 'disabled');
+        fieldName.remove();
+        fieldName2.remove();
+        evt.preventDefault();
+      } else {
+        button.setAttribute('disabled', 'disabled');
+        newField.parentNode.insertBefore(fieldName2, newField.previousSibling);
+      }
+    }, false);
+  }
+
+  checkFieldName();
+
+  function checkMark() {
+    markLabel[0].addEventListener('mousedown', function(evt) {
+      reviewText.setAttribute('required', 'required');
       evt.preventDefault();
-    } else {
-      button.setAttribute('disabled', 'disabled');
-      newField.parentNode.insertBefore(fieldName2, newField.previousSibling);
-    }
-  }, false);
+    }, false);
+
+    markLabel[1].addEventListener('mousedown', function(evt) {
+      reviewText.setAttribute('required', 'required');
+      evt.preventDefault();
+    }, false);
+
+    markLabel[2].addEventListener('mousedown', function(evt) {
+      reviewText.removeAttribute('required', 'required');
+      evt.preventDefault();
+    }, false);
+
+    markLabel[3].addEventListener('mousedown', function(evt) {
+      reviewText.removeAttribute('required', 'required');
+      evt.preventDefault();
+    }, false);
+
+    markLabel[4].addEventListener('mousedown', function(evt) {
+      reviewText.removeAttribute('required', 'required');
+      evt.preventDefault();
+    }, false);
+  }
+
+  checkMark();
 
 })();
