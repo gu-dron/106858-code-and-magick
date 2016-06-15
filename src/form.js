@@ -27,7 +27,7 @@
   var newField = document.createElement('label');
   var markLabel = document.querySelectorAll('.review-mark-label');
 
-  newField.innerHTML = '';
+  newField.innerHTML = "";
   div.insertBefore(newField, labelComment);
 
   button.setAttribute('disabled', 'disabled');
