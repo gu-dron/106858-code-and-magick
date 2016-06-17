@@ -1,6 +1,7 @@
 'use strict';
 
 (function() {
+
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -26,6 +27,8 @@
   var labelComment = div.children[2];
   var newField = document.createElement('label');
   var markLabel = document.querySelectorAll('.review-mark-label');
+  var form = document.querySelector('.review-form');
+  var reviewMark = form.elements['review-mark'];
 
   newField.innerHTML = '';
   div.insertBefore(newField, labelComment);
@@ -91,5 +94,26 @@
   }
 
   checkMark();
+
+  var browserCookies = require('browser-cookies');
+
+  reviewName.value = browserCookies.get('name');
+  reviewMark.value = browserCookies.get('mark');
+
+  button.onclick = function() {
+    var date = Date.now();
+    var year = new Date();
+    var birthDate = new Date(year.getFullYear(), 0, 14);
+    if (year < birthDate) {
+      birthDate.setFullYear(birthDate.getFullYear() - 1);
+    }
+    var birthDateMs = birthDate.valueOf();
+    var differenceDate = (date - birthDateMs);
+    var dateToExpire = Date.now() + differenceDate;
+    var formatedDateToExpire = new Date(dateToExpire).toUTCString();
+
+    browserCookies.set('name', reviewName.value, {expires: formatedDateToExpire});
+    browserCookies.set('mark', reviewMark.value, {expires: formatedDateToExpire});
+  };
 
 })();
