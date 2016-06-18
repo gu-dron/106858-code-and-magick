@@ -101,14 +101,14 @@
   reviewMark.value = browserCookies.get('mark');
 
   button.onclick = function() {
-    var date = Date.now();
-    var year = new Date();
-    var birthDate = new Date(year.getFullYear(), 0, 14);
-    if (year < birthDate) {
+    var timeInMs = Date.now();
+    var todayDate = new Date();
+    var birthDate = new Date(todayDate.getFullYear(), 0, 14);
+    if (todayDate < birthDate) {
       birthDate.setFullYear(birthDate.getFullYear() - 1);
     }
     var birthDateMs = birthDate.valueOf();
-    var differenceDate = (date - birthDateMs);
+    var differenceDate = (timeInMs - birthDateMs);
     var dateToExpire = Date.now() + differenceDate;
     var formatedDateToExpire = new Date(dateToExpire).toUTCString();
 
