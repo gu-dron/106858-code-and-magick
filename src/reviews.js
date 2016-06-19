@@ -18,6 +18,7 @@ if ('content' in templateElement) {
 }
 
 var getReviewsElement = function(data, container) {
+  //Функция cloneNode клонирует тэг article
   var element = elementToClone.cloneNode(true);
   var reviewAuthor = element.querySelector('.review-author');
   element.querySelector('.review-rating').textContent = data.rating;
@@ -27,10 +28,12 @@ var getReviewsElement = function(data, container) {
   var authorImage = new Image(124, 124);
   var authorImageLoadTimeout;
 
+  authorImage.onload = function() {
     reviewAuthor.src = authorImage;
     reviewAuthor.name = data.author.name;
     reviewAuthor.alt = data.author.name;
     clearTimeout(authorImageLoadTimeout);
+
   };
   authorImage.onerror = function() {
     element.classList.add('review-load-failure');
@@ -44,5 +47,6 @@ var getReviewsElement = function(data, container) {
   return element;
 };
 
+window.reviews.forEach(function(review) {
   getReviewsElement(review, reviewsContainer);
 });
