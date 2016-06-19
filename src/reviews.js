@@ -46,7 +46,7 @@ var getReviewsElement = function(data, container) {
   }, IMAGE_LOAD_TIMEOUT);
   return element;
 };
-
+//forEach возвращает undefined
 window.reviews.forEach(function(review) {
   getReviewsElement(review, reviewsContainer);
 });
