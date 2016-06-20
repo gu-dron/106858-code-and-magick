@@ -1,52 +1,52 @@
 'use strict';
-//Объявляем переменную для .reviews-filter
-var refiewFilter = document.querySelector('.reviews-filter');
 
-//Прячет блок с фильтрами .reviews-filter, добавляя ему класс invisible
-refiewFilter.classList.add('invisible');
+(function() {
+  var refiewFilter = document.querySelector('.reviews-filter');
+  refiewFilter.classList.add('invisible');
 
-var reviewsContainer = document.querySelector('.reviews-list');
-var templateElement = document.querySelector('template');
-var elementToClone;
+  var reviewsContainer = document.querySelector('.reviews-list');
+  var templateElement = document.querySelector('template');
+  var elementToClone;
 
-var IMAGE_LOAD_TIMEOUT = 10000;
+  if ('content' in templateElement) {
+    elementToClone = templateElement.content.querySelector('.review');
+  } else {
+    elementToClone = templateElement.querySelector('.review');
+  }
 
-if ('content' in templateElement) {
-  elementToClone = templateElement.content.querySelector('.review');
-} else {
-  elementToClone = templateElement.querySelector('.review');
-}
+  var getReviewsElement = function(data) {
+    var element = elementToClone.cloneNode(true);
+    element.querySelector('.review-text').textContent = data.description;
+    var avatar = element.querySelector('.review-author');
+    reviewsContainer.appendChild(element);
+    var authorAvatar = new Image();
+    var authorAvatarLoadTimeout;
 
-var getReviewsElement = function(data, container) {
-  //Функция cloneNode клонирует тэг article
-  var element = elementToClone.cloneNode(true);
-  var reviewAuthor = element.querySelector('.review-author');
-  element.querySelector('.review-rating').textContent = data.rating;
-  element.querySelector('.review-text').textContent = data.description;
-  container.appendChild(element);
+    authorAvatar.onload = function() {
+      clearTimeout(authorAvatarLoadTimeout);
+      avatar.src = authorAvatar.src;
+      avatar.alt = data.author.name;
+      avatar.title = data.author.name;
+      avatar.style.width = '124px';
+      avatar.style.height = '124px';
+    };
 
-  var authorImage = new Image(124, 124);
-  var authorImageLoadTimeout;
+    authorAvatar.onerror = function() {
+      element.classList.add('review-load-failure');
+    };
 
-  authorImage.onload = function() {
-    reviewAuthor.src = authorImage;
-    reviewAuthor.name = data.author.name;
-    reviewAuthor.alt = data.author.name;
-    clearTimeout(authorImageLoadTimeout);
+    authorAvatar.src = data.author.picture;
 
+    authorAvatarLoadTimeout = setTimeout(function() {
+      authorAvatar = '';
+      element.classList.add('review-load-failure');
+    }, 10000);
+
+    return element;
   };
-  authorImage.onerror = function() {
-    element.classList.add('review-load-failure');
-  };
-  authorImage.src = data.preview;
+  window.reviews.map(function(review) {
+    getReviewsElement(review);
+  });
 
-  authorImage = setTimeout(function() {
-    authorImage.src = '';
-    element.classList.add('hotel-nophoto');
-  }, IMAGE_LOAD_TIMEOUT);
-  return element;
-};
-//forEach возвращает undefined
-window.reviews.forEach(function(review) {
-  getReviewsElement(review, reviewsContainer);
-});
+  refiewFilter.classList.remove('invisible');
+})();
