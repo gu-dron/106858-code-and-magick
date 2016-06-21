@@ -21,11 +21,12 @@
     reviewsContainer.appendChild(element);
     var authorAvatar = new Image();
     var authorAvatarLoadTimeout;
+    var authorNameAlt = review.author.name;
 
     authorAvatar.onload = function() {
       clearTimeout(authorAvatarLoadTimeout);
       avatar.src = authorAvatar.src;
-      avatar.alt = review.author.name;
+      avatar.alt = authorNameAlt;
       avatar.title = review.author.name;
       avatar.style.width = '124px';
       avatar.style.height = '124px';
