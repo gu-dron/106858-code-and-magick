@@ -56,6 +56,7 @@
       if (this.readyState === 4) {
         var loadedData = JSON.parse(evt.target.response);
         elementToClone.classList.remove('reviews-list-loading');
+        refiewFilter.classList.remove('invisible');
         callback(loadedData);
       }
       if (this.readyState === 2 || this.readyState === 3) {
@@ -81,5 +82,4 @@
     renderReviews(reviews);
   });
 
-  refiewFilter.classList.remove('invisible');
 })();
