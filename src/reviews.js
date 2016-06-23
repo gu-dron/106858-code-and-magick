@@ -1,6 +1,7 @@
 'use strict';
 (function() {
 /**@constant {string}*/
+  var REWIEVS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
 
   var refiewFilter = document.querySelector('.reviews-filter');
   refiewFilter.classList.add('invisible');
@@ -52,15 +53,16 @@
     var xhr = new XMLHttpRequest();
     /** @param {ProgressEvent} */
     xhr.onreadystatechange = function(evt) {
-      if (this.readyState == 4) {
+      if (this.readyState === 4) {
         var loadedData = JSON.parse(evt.target.response);
         elementToClone.classList.remove('reviews-list-loading');
         callback(loadedData);
       }
-      if (this.readyState == 2 || this.readyState == 3) {
+      if (this.readyState === 2 || this.readyState === 3) {
         elementToClone.classList.add('reviews-list-loading');
       }
-      if (this.status == 404) {
+      if (this.status === 404) {
+        reviewsContainer.classList.add('reviews-load-failure');
       }
     };
 
@@ -69,13 +71,13 @@
   };
 /** @param {Array.<Object>} reviews */
   var renderReviews = function(reviews) {
-    window.reviews.forEach(function(review) {
+    reviews.forEach(function(review) {
       getReviewElement(review, reviewsContainer);
     });
   };
 
   getReviews(function(loadedReviews) {
-    reviews = loadedReviews;
+    var reviews = loadedReviews;
     renderReviews(reviews);
   });
 
