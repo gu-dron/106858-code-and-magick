@@ -74,14 +74,14 @@
   };
 
   /** @param {Array.<Object>} hotels */
-  var renderReviews = function(reviews) {
+  var renderReviews = function(loadedReviews) {
     reviewsContainer.innerHTML = '';
-    reviews.forEach(function(review) {
+    loadedReviews.forEach(function(review) {
       getReviewElement(review, reviewsContainer);
     });
   };
 
-  var getFilteredReviews = function(reviews, filter) {
+  var getFilteredReviews = function(loadedReviews, filter) {
     var reviewsToFilter = reviews.slice(0);
 
     switch (filter) {
