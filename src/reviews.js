@@ -70,15 +70,45 @@
     xhr.open('GET', REWIEVS_LOAD_URL);
     xhr.send();
   };
-/** @param {Array.<Object>} reviews */
+
+  /** @param {Array.<Object>} hotels */
   var renderReviews = function(reviews) {
+    reviewsContainer.innerHTML = '';
     reviews.forEach(function(review) {
       getReviewElement(review, reviewsContainer);
     });
   };
 
+  var getFilteredReviews = function(reviews, filter) {
+    var reviewsToFilter = reviews.slice(0);
+
+    switch (filter) {
+      case 'reviews-good':
+        reviewsToFilter.sort(function(a, b) {
+          return a.rating - b.rating;
+        });
+        break;
+    }
+    return reviewsToFilter;
+  };
+
+  /** @param {string} filter */
+  var setFilterEnabled = function(filter) {
+    var filteredReview = getFilteredReviews(reviews, filter);
+    renderReviews(filteredReview);
+  };
+
+  var setFiltrationEnabled = function() {
+    var filters = refiewFilter.querySelectorAll('.reviews-filter-item');
+    for (var i = 0; i < filters.length; i++) {
+        setFilterEnabled(this.id);
+      };
+    }
+  };
+
   getReviews(function(loadedReviews) {
-    var reviews = loadedReviews;
+    reviews = loadedReviews;
+    setFiltrationEnabled();
     renderReviews(reviews);
   });
 
