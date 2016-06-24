@@ -1,5 +1,7 @@
 'use strict';
 (function() {
+
+  var reviews;
 /**@constant {string}*/
   var REWIEVS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
 
