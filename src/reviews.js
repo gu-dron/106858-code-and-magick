@@ -1,7 +1,9 @@
 'use strict';
 (function() {
-
-  var reviews;
+/**@constant {number}*/
+  var SENDING_DATA = 2;
+  var RECEIVING_DATA = 3;
+  var DATA_UPLOADED = 4;
 /**@constant {string}*/
   var REWIEVS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
 
@@ -11,6 +13,7 @@
   var reviewsContainer = document.querySelector('.reviews-list');
   var templateElement = document.querySelector('template');
   var elementToClone;
+  var reviews;
 
   if ('content' in templateElement) {
     elementToClone = templateElement.content.querySelector('.review');
@@ -55,13 +58,13 @@
     var xhr = new XMLHttpRequest();
     /** @param {ProgressEvent} */
     xhr.onreadystatechange = function(evt) {
-      if (this.readyState === 4) {
+      if (this.readyState === DATA_UPLOADED) {
         var loadedData = JSON.parse(evt.target.response);
         elementToClone.classList.remove('reviews-list-loading');
         refiewFilter.classList.remove('invisible');
         callback(loadedData);
       }
-      if (this.readyState === 2 || this.readyState === 3) {
+      if (this.readyState === SENDING_DATA || this.readyState === RECEIVING_DATA) {
         elementToClone.classList.add('reviews-list-loading');
       }
       if (this.status === 404) {
