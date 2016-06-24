@@ -101,6 +101,7 @@
   var setFiltrationEnabled = function() {
     var filters = refiewFilter.querySelectorAll('.reviews-filter-item');
     for (var i = 0; i < filters.length; i++) {
+      filters[i].onclick = function() {
         setFilterEnabled(this.id);
       };
     }
