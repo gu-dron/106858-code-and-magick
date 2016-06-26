@@ -14,18 +14,15 @@
   var templateElement = document.querySelector('template');
   var elementToClone;
   var reviews = [];
-  
+  var noReviews = document.createElement('div');
+
   var Filter = {
-  'ALL': 'reviews-all',
-  'RECENT': 'reviews-recent',
-  'GOOD': 'reviews-good',
-  'BAD': 'reviews-bad',
-  'POPULAR': 'reviews-popular'
-};
-
-
-/** @constant {Filter} */
-var DEFAULT_FILTER = Filter.ALL;
+    'ALL': 'reviews-all',
+    'RECENT': 'reviews-recent',
+    'GOOD': 'reviews-good',
+    'BAD': 'reviews-bad',
+    'POPULAR': 'reviews-popular'
+  };
 
   if ('content' in templateElement) {
     elementToClone = templateElement.content.querySelector('.review');
@@ -68,13 +65,12 @@ var DEFAULT_FILTER = Filter.ALL;
   /** @param {function(Array.<Object>)} callback */
   var getReviews = function(callback) {
     var xhr = new XMLHttpRequest();
-    /** @param {ProgressEvent} */
+
     xhr.onreadystatechange = function(evt) {
       if (this.readyState === DATA_UPLOADED) {
         var loadedData = JSON.parse(evt.target.response);
         elementToClone.classList.remove('reviews-list-loading');
         refiewFilter.classList.remove('invisible');
-        debugger;
         callback(loadedData);
       }
       if (this.readyState === SENDING_DATA || this.readyState === RECEIVING_DATA) {
@@ -89,52 +85,69 @@ var DEFAULT_FILTER = Filter.ALL;
     xhr.send();
   };
 
-  /** @param {Array.<Object>} hotels */
+  var noMessage = function() {
+    noReviews.innerHTML = 'Удовлетворяющей информации не найдено!';
+    noReviews.style.marginBottom = '50px';
+    noReviews.style.textAlign = 'center';
+    noReviews.style.fontSize = '24px';
+    reviewsContainer.appendChild(noReviews);
+  };
+
   var renderReviews = function(loadedReviews) {
-    debugger;
     reviewsContainer.innerHTML = '';
-    loadedReviews.forEach(function(review) {
-      getReviewElement(review, reviewsContainer);
-    });
+    if (loadedReviews.length === 0) {
+      noMessage();
+    } else {
+      loadedReviews.forEach(function(review) {
+        getReviewElement(review, reviewsContainer);
+      });
+    }
   };
 
   var getFilteredReviews = function(loadedReviews, filter) {
-    debugger;
     var reviewsToFilter = reviews.slice(0);
 
     switch (filter) {
       case Filter.GOOD:
-        return reviewsToFilter
-          .filter(function(filterRating){
+        return reviewsToFilter.filter(function(filterRating) {
           return (filterRating.rating >= 3);
         })
         .sort(function(a, b) {
-          return (a.rating + b.rating);
+          return (b.rating - a.rating);
         });
-        break;
       case Filter.BAD:
-        reviewsToFilter.sort(function(a, b) {
-          return a.rating + b.rating;
+        return reviewsToFilter.filter(function(filterRating) {
+          return (filterRating.rating <= 2);
+        })
+        .sort(function(a, b) {
+          return (a.rating - b.rating);
         });
-        break;
+      case Filter.POPULAR:
+        return reviewsToFilter.sort(function(a, b) {
+          return (b.review_usefulness - a.review_usefulness);
+        });
+      case Filter.RECENT:
+        var dateToCompare = Date.now();
+        return reviewsToFilter.filter(function(review) {
+          return (dateToCompare < Date.parse(review.date));
+        })
+        .sort(function(a, b) {
+          return (b.date - a.date);
+        });
     }
     return reviewsToFilter;
   };
 
-  /** @param {string} filter */
   var setFilterEnabled = function(filter) {
     var filteredReview = getFilteredReviews(reviews, filter);
     renderReviews(filteredReview);
   };
 
   var setFiltrationEnabled = function() {
-    debugger;
     var filters = refiewFilter.querySelectorAll('.reviews-filter-item');
     for (var i = 0; i < filters.length; i++) {
-      filters[i].onclick = function(evt) {
-        debugger;
+      filters[i].onclick = function() {
         setFilterEnabled(this.htmlFor);
-        evt.preventDefault();
       };
     }
   };
@@ -142,9 +155,7 @@ var DEFAULT_FILTER = Filter.ALL;
   getReviews(function(loadedReviews) {
     reviews = loadedReviews;
     setFiltrationEnabled();
-    debugger;
-    setFilterEnabled(DEFAULT_FILTER)
-    renderReviews(reviews);
+    setFilterEnabled();
   });
 
 })();
