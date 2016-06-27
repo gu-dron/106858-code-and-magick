@@ -6,6 +6,7 @@
   var DATA_UPLOADED = 4;
 /**@constant {string}*/
   var REWIEVS_LOAD_URL = '//o0.github.io/assets/json/reviews.json';
+  var notFound = 404;
 
   var refiewFilter = document.querySelector('.reviews-filter');
   refiewFilter.classList.add('invisible');
@@ -76,7 +77,7 @@
       if (this.readyState === SENDING_DATA || this.readyState === RECEIVING_DATA) {
         elementToClone.classList.add('reviews-list-loading');
       }
-      if (this.status === 404) {
+      if (this.status === notFound) {
         reviewsContainer.classList.add('reviews-load-failure');
       }
     };
