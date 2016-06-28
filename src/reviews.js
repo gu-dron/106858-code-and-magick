@@ -24,6 +24,8 @@
     'BAD': 'reviews-bad',
     'POPULAR': 'reviews-popular'
   };
+/**@constant{number}*/
+  var PAGE_SIZE = 3;
 
   if ('content' in templateElement) {
     elementToClone = templateElement.content.querySelector('.review');
@@ -94,12 +96,15 @@
     reviewsContainer.appendChild(noReviews);
   };
 
-  var renderReviews = function(loadedReviews) {
+  var renderReviews = function(loadedReviews, page) {
     reviewsContainer.innerHTML = '';
+
+    var from = (page * PAGE_SIZE);
+    var to = (from + PAGE_SIZE);
     if (loadedReviews.length === 0) {
       noMessage();
     } else {
-      loadedReviews.forEach(function(review) {
+      loadedReviews.slice(from, to).forEach(function(review) {
         getReviewElement(review, reviewsContainer);
       });
     }
@@ -141,7 +146,7 @@
 
   var setFilterEnabled = function(filter) {
     var filteredReview = getFilteredReviews(reviews, filter);
-    renderReviews(filteredReview);
+    renderReviews(filteredReview, 0);
   };
 
   var setFiltrationEnabled = function() {
