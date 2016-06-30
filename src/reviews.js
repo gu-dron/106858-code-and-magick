@@ -15,7 +15,9 @@
   var templateElement = document.querySelector('template');
   var elementToClone;
   var reviews = [];
+  var filteredReviews = [];
   var noReviews = document.createElement('div');
+  var buttonSwitch = document.createElement('button');
 
   var Filter = {
     'ALL': 'reviews-all',
@@ -24,6 +26,10 @@
     'BAD': 'reviews-bad',
     'POPULAR': 'reviews-popular'
   };
+/** @constant {number}*/
+  var PAGE_SIZE = 3;
+/** @type {number}*/
+  var pageNumber = 1;
 
   if ('content' in templateElement) {
     elementToClone = templateElement.content.querySelector('.review');
@@ -86,6 +92,22 @@
     xhr.send();
   };
 
+  var buttonSwitchPage = function() {
+    buttonSwitch.innerHTML = 'Показать еще';
+    buttonSwitch.style.background = '#ffffff';
+    buttonSwitch.style.lineHeight = '36px';
+    buttonSwitch.style.color = '#000000';
+    buttonSwitch.style.display = 'table';
+    buttonSwitch.style.margin = '0 auto';
+    buttonSwitch.style.textAlign = 'center';
+    buttonSwitch.style.fontWeight = 'bold';
+    buttonSwitch.style.fontSize = '22px';
+    buttonSwitch.style.border = 'none';
+    buttonSwitch.style.boxShadow = '3px 3px 0 #000000';
+    buttonSwitch.style.marginBottom = '30px';
+    reviewsContainer.appendChild(buttonSwitch);
+  };
+
   var noMessage = function() {
     noReviews.innerHTML = 'Удовлетворяющей информации не найдено!';
     noReviews.style.marginBottom = '50px';
@@ -94,13 +116,21 @@
     reviewsContainer.appendChild(noReviews);
   };
 
-  var renderReviews = function(loadedReviews) {
-    reviewsContainer.innerHTML = '';
+  var renderReviews = function(loadedReviews, page, replace) {
+    if (replace) {
+      reviewsContainer.innerHTML = '';
+      buttonSwitch.classList.remove('invisible');
+    } else if (loadedReviews.length <= 3) {
+      buttonSwitch.classList.remove('invisible');
+    }
+    var from = (page * PAGE_SIZE);
+    var to = (from + PAGE_SIZE);
     if (loadedReviews.length === 0) {
       noMessage();
     } else {
-      loadedReviews.forEach(function(review) {
+      loadedReviews.slice(from, to).forEach(function(review) {
         getReviewElement(review, reviewsContainer);
+        buttonSwitchPage();
       });
     }
   };
@@ -140,23 +170,46 @@
   };
 
   var setFilterEnabled = function(filter) {
-    var filteredReview = getFilteredReviews(reviews, filter);
-    renderReviews(filteredReview);
+    filteredReviews = getFilteredReviews(reviews, filter);
+    pageNumber = 1;
+    renderReviews(filteredReviews, pageNumber, true);
   };
 
   var setFiltrationEnabled = function() {
-    var filters = refiewFilter.querySelectorAll('.reviews-filter-item');
-    for (var i = 0; i < filters.length; i++) {
-      filters[i].onclick = function() {
-        setFilterEnabled(this.htmlFor);
-      };
-    }
+    refiewFilter.addEventListener('click', function(evt) {
+      if (evt.target.classList.contains('reviews-filter-item')) {
+        setFilterEnabled(evt.target.htmlFor);
+      }
+    });
+
+  };
+
+  /**
+ * @param {Array} hotels
+ * @param {number} page
+ * @param {number} pageSize
+ * @return {boolean}
+ */
+  var isNextPageAvailable = function(review, page, pageSize) {
+    return page < Math.floor(review.length / pageSize);
+  };
+
+  var setClickEnabled = function() {
+    buttonSwitch.addEventListener('click', function() {
+      if (isNextPageAvailable(filteredReviews, pageNumber, PAGE_SIZE)) {
+        pageNumber++;
+        renderReviews(filteredReviews, pageNumber);
+      } else {
+        buttonSwitch.classList.add('invisible');
+      }
+    });
   };
 
   getReviews(function(loadedReviews) {
     reviews = loadedReviews;
     setFiltrationEnabled();
     setFilterEnabled();
+    setClickEnabled(loadedReviews);
   });
 
 })();
