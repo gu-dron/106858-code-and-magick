@@ -264,6 +264,23 @@
     this._pauseListener = this._pauseListener.bind(this);
   };
 
+  var cloudsElement = document.querySelector('.header-clouds');
+  var headerElement = document.querySelector('header');
+
+    var headerPosition = headerElement.getBoundingClientRect();
+    var headerTop = headerPosition.top;
+    return headerTop
+  }
+
+  var scrollParallax = function() {
+    window.addEventListener('scroll', function(evt) {
+
+    })
+  }
+  
+  scrollParallax();
+  sizeScroll();
+  
   Game.prototype = {
     /**
      * Текущий уровень игры.
