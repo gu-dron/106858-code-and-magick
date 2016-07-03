@@ -267,6 +267,7 @@
   var cloudsElement = document.querySelector('.header-clouds');
   var headerElement = document.querySelector('header');
 
+  var sizeScroll = function() {
     var headerPosition = headerElement.getBoundingClientRect();
     var headerTop = headerPosition.top;
     return headerTop
