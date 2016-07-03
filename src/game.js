@@ -11,6 +11,12 @@
    * @const
    * @type {number}
    */
+  var THROTTLE_DELAY = 100;
+
+  /**
+   * @const
+   * @type {number}
+   */
   var HEIGHT = 300;
 
   /**
@@ -264,16 +270,80 @@
     this._pauseListener = this._pauseListener.bind(this);
   };
 
+  /**
+   * @type {HTMLElement}
+   */
   var cloudsElement = document.querySelector('.header-clouds');
 
-  var scrollParallax = function() {
-    window.addEventListener('scroll', function() {
-      cloudsElement.style.backgroundPosition = document.body.scrollTop + 539 + 'px';
-    });
+  /**
+   * @type {HTMLElement}
+   */
+  var demoElement = document.querySelector('.demo');
+
+  /**
+   * возвращает координаты элемента .header-clouds
+   */
+  var renderingClouds = function() {
+    var cloudsPosition = cloudsElement.getBoundingClientRect();
+    return cloudsPosition.bottom;
   };
 
-  scrollParallax();
+  /**
+   * возвращает координаты элемента .demo
+   */
+  var frizzenDemo = function() {
+    var gamePosition = demoElement.getBoundingClientRect();
+    return gamePosition.bottom;
+  };
 
+  /**
+   * изменяет положение облаков
+   */
+  var parallaxClouds = function() {
+    cloudsElement.style.backgroundPosition = document.body.scrollTop + 539 + 'px';
+  };
+
+  /**
+   * добавляет слушатель на прокрутку страницы
+   */
+  var scrollParallax = function() {
+    window.addEventListener('scroll', parallaxClouds);
+  };
+
+  /**
+   * удаляет слушатель на прокрутку страницы
+   */
+  var scrollParallaxRemove = function() {
+    window.removeEventListener('scroll', parallaxClouds);
+  };
+
+   /**
+   * совершает проверку положения элементов .header-clouds и .demo
+   */
+  var checkPositionClouds = function() {
+    if (renderingClouds() > 0 && frizzenDemo() > 0) {
+      scrollParallax();
+      game.setGameStatus(Game.Verdict.INTRO);
+    } else if (renderingClouds() < 0 && frizzenDemo() < 0) {
+      scrollParallaxRemove();
+      game.setGameStatus(Game.Verdict.PAUSE);
+    }
+  };
+
+  /**
+   * таймаут для проверки позиции элементов в момент прокрутки страницы
+   */
+  var timeoutCheck = function() {
+    var lastCall = Date.now();
+    window.onscroll = function() {
+      if (Date.now() - lastCall >= THROTTLE_DELAY) {
+        checkPositionClouds();
+        lastCall = Date.now();
+      }
+    };
+  };
+
+  timeoutCheck();
   Game.prototype = {
     /**
      * Текущий уровень игры.
