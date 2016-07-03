@@ -265,23 +265,15 @@
   };
 
   var cloudsElement = document.querySelector('.header-clouds');
-  var headerElement = document.querySelector('header');
-
-  var sizeScroll = function() {
-    var headerPosition = headerElement.getBoundingClientRect();
-    var headerTop = headerPosition.top;
-    return headerTop
-  }
 
   var scrollParallax = function() {
-    window.addEventListener('scroll', function(evt) {
+    window.addEventListener('scroll', function() {
+      cloudsElement.style.backgroundPosition = document.body.scrollTop + 539 + 'px';
+    });
+  };
 
-    })
-  }
-  
   scrollParallax();
-  sizeScroll();
-  
+
   Game.prototype = {
     /**
      * Текущий уровень игры.
